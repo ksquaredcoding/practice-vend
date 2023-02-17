@@ -1,44 +1,46 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img
-        src="https://bcw.blob.core.windows.net/public/img/8600856373152463"
-        alt="CodeWorks Logo"
-        class="rounded-circle"
-      >
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <VendingMachine :vendingMachine="vendingMachine">
+    <div class="col-3" v-for="p in products">
+      <ProductButton :product="p" :key="p.id" />
     </div>
-  </div>
+  </VendingMachine>
 </template>
 
 <script>
+import VendingMachine from "../components/VendingMachine.vue";
+import { vendingMachineService } from "../services/VendingMachineService.js";
+import { productsService } from "../services/ProductsService.js";
+import { computed, onMounted } from "vue";
+import { AppState } from '../AppState'
+import ProductButton from "../components/ProductButton.vue";
+
 export default {
   setup() {
-    return {}
-  }
+    async function getVendingMachine() {
+      try {
+        await vendingMachineService.getVendingMachine()
+        await getAllProducts()
+      } catch (error) {
+        console.error('[ERROR GETTING VENDING MACHINE]', error)
+      }
+    }
+    async function getAllProducts() {
+      try {
+        await productsService.getAllProducts()
+      } catch (error) {
+        console.error('[ERROR GETTING PRODUCTS]', error)
+      }
+    }
+    onMounted(() => {
+      getVendingMachine()
+    })
+    return {
+      products: computed(() => AppState.products),
+      vendingMachine: computed(() => AppState.vendingMachine)
+    };
+  },
+  components: { VendingMachine, ProductButton }
 }
 </script>
 
-<style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-
-  .home-card {
-    width: 50vw;
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>
