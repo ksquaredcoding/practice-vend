@@ -6,7 +6,6 @@ class VendingMachineService {
   async getVendingMachine() {
     const res = await api.get('/api/vend')
     AppState.vendingMachine = res.data
-    console.log(res.data);
   }
 }
 

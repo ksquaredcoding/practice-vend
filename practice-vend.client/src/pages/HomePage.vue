@@ -1,6 +1,6 @@
 <template>
   <VendingMachine :vendingMachine="vendingMachine">
-    <div class="col-3" v-for="p in products">
+    <div class="col-3 m-2" v-for="p in products">
       <ProductButton :product="p" :key="p.id" />
     </div>
   </VendingMachine>
