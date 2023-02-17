@@ -3,7 +3,7 @@ import { BadRequest, Forbidden } from '../utils/Errors'
 
 class VendingMachineService {
   async getVendingMachine() {
-    const vendingMachine = await dbContext.VendingMachine.find()
+    const vendingMachine = await dbContext.VendingMachine.findOne()
     if (!vendingMachine) {
       throw new BadRequest('No vending machine found')
     }

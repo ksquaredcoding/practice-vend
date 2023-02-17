@@ -2,8 +2,7 @@
   <div class="container bg-dark">
     <div class="row justify-content-evenly">
       <div class="col-3 bg-light">
-        <p>Total Sales: {{ vendingMachine?.sales }}</p>
-        <!-- TODO sales not showing -->
+        <p>Total Sales: {{ sales }}</p>
       </div>
       <div class="col-3 bg-light">
         <p>Funds: ${{ funds }}</p>
@@ -29,7 +28,9 @@ export default {
   },
   setup(props) {
     return {
-      funds: computed(() => AppState.funds.toFixed(2))
+      props,
+      funds: computed(() => AppState.funds.toFixed(2)),
+      sales: computed(() => AppState.vendingMachine?.sales)
     }
   }
 }

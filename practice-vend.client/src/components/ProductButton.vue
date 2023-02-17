@@ -12,7 +12,9 @@ export default {
     product: { type: Object, required: true }
   },
   setup(props) {
-    return {}
+    return {
+      props
+    }
   }
 }
 </script>
